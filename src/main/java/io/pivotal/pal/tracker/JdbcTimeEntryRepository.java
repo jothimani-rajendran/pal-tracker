@@ -1,5 +1,6 @@
 package io.pivotal.pal.tracker;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.tomcat.jni.File;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
@@ -19,8 +20,10 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
 
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcTimeEntryRepository(DataSource ds) {
-        jdbcTemplate = new JdbcTemplate(ds);
+    public JdbcTimeEntryRepository() {
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
+        jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
