@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @SpringBootApplication
@@ -18,6 +19,12 @@ public class PalTrackerApplication {
     @Bean
     public TimeEntryRepository timeEntryRepository() {
         return new InMemoryTimeEntryRepository();
+
+    }
+
+    @Bean
+    public JdbcTimeEntryRepository jdbcTimeEntryRepository(DataSource dataSource) {
+        return new JdbcTimeEntryRepository(dataSource);
 
     }
 
